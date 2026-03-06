@@ -27,23 +27,21 @@ function initNavbarFeatures() {
 
     const savedTheme = localStorage.getItem('theme') || 'dark';
     htmlElement.setAttribute('data-bs-theme', savedTheme);
-    updateIcon(savedTheme);
+    updateIcon(themeIcon, savedTheme);
 
     themeToggle.addEventListener('click', () => {
         const currentTheme = htmlElement.getAttribute('data-bs-theme');
         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
         htmlElement.setAttribute('data-bs-theme', newTheme);
         localStorage.setItem('theme', newTheme);
-        updateIcon(newTheme);
+        updateIcon(themeIcon, newTheme);
     });
 
-    function updateIcon(theme) {
+    function updateIcon(iconElement, theme) {
         if (theme === 'dark') {
-            themeIcon.classList.remove('fa-circle-half-stroke', 'text-muted');
-            themeIcon.classList.add('fa-moon', 'text-white');
+            iconElement.className = 'fa-solid fa-moon fs-5 text-secondary';
         } else {
-            themeIcon.classList.remove('fa-moon', 'text-white');
-            themeIcon.classList.add('fa-circle-half-stroke', 'text-muted');
+            iconElement.className = 'fa-solid fa-sun fs-5 text-warning';
         }
     }
 }

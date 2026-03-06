@@ -8,6 +8,16 @@
     color: #f8f9fa !important;
 }
 
+.bg-body-tertiary {
+    transition: background-color 0.3s ease;
+}
+
+#themeToggle:hover i {
+    transform: rotate(15deg);
+    transition: 0.3s;
+    opacity: 0.8;
+}
+
 .nav-link.active {
     color: var(--bs-primary) !important;
 }
@@ -20,8 +30,4 @@
 footer a.text-muted:hover {
     color: var(--bs-primary) !important;
     transition: 0.3s ease;
-}
-
-.bg-body-tertiary {
-    transition: background-color 0.3s ease;
 }
