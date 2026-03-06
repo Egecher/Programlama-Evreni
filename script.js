@@ -2,7 +2,7 @@ fetch('navbar.html')
 .then(response => response.text())
 .then(data => {
     document.getElementById('navbar-placeholder').innerHTML = data;
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
     initNavbarFeatures();
 
     const currentPage = window.location.pathname.split("/").pop();
