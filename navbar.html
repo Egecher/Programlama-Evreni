@@ -16,21 +16,28 @@
             </ul>
 
             <div class="d-flex align-items-center gap-3">
-                <button class="btn btn-link nav-link p-0" id="themeToggle">
-                    <i class="fa-solid fa-moon text-white"></i>
+                <button class="btn btn-link nav-link p-0 ms-2" id="themeToggle" title="Temayı Değiştir">
+                    <i class="fa-solid fa-moon fs-5"></i>
                 </button>
 
-                <div class="dropdown">
-                    <button class="btn btn-primary btn-sm rounded-pill px-3 fw-bold shadow-sm" data-bs-toggle="dropdown">
-                        Giriş Yap
+                <button class="btn btn-primary btn-sm rounded-pill px-3 fw-bold shadow-sm">
+                    Giriş <span class="d-none d-sm-inline">Yap</span>
+                </button>
+
+                <!-- giriş yapıldıysa -->
+                <!-- <div class="dropdown">
+                    <button class="btn btn-dark d-flex align-items-center gap-2 border-0" data-bs-toggle="dropdown">
+                        <img src="https://ui-avatars.com/api/?name=Egec&background=198754&color=fff" class="rounded-circle" width="30" height="30" alt="Profil">
+                        <span class="d-none d-lg-inline text-white small">Egec</span>
                     </button>
-                    <ul class="dropdown-menu dropdown-menu-end shadow border-0">
-                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user me-2"></i>Profilim</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-gear me-2"></i>Ayarlar</a></li>
+                    <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
+                        <li class="px-3 py-2 small text-muted">Puan: <span class="fw-bold text-success">1,250</span></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-danger" href="#"><i class="fa-solid fa-right-from-bracket me-2"></i>Çıkış Yap</a></li>
+                        <li><a class="dropdown-item" href="/profile"><i class="fa-solid fa-user me-2"></i>Profilim</a></li>
+                        <li><a class="dropdown-item text-danger" href="/sign-out"><i class="fa-solid fa-right-from-bracket me-2"></i>Çıkış Yap</a></li>
                     </ul>
-                </div>
+                </div> -->
+
             </div>
         </div>
     </div>
