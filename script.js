@@ -39,11 +39,11 @@ function initNavbarFeatures() {
 
     function updateIcon(theme) {
         if (theme === 'dark') {
-            themeIcon.classList.remove('fa-sun', 'text-warning');
+            themeIcon.classList.remove('fa-circle-half-stroke', 'text-muted');
             themeIcon.classList.add('fa-moon', 'text-white');
         } else {
             themeIcon.classList.remove('fa-moon', 'text-white');
-            themeIcon.classList.add('fa-sun', 'text-warning');
+            themeIcon.classList.add('fa-circle-half-stroke', 'text-muted');
         }
     }
 }
