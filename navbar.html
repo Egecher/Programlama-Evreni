@@ -1,17 +1,37 @@
-<nav class="navbar navbar-expand-md navbar-dark">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top shadow">
     <div class="container">
-        <a href="index.html" class="navbar-brand">
-            <i class="fa-solid fa-house"></i>
+        <a href="index.html" class="navbar-brand fw-bold">
+            <i class="fa-solid fa-code text-success me-2"></i>Programlama <span class="d-none d-sm-inline">Evreni</span>
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mobile"><span class="navbar-toggler-icon"></span></button>
+
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mobile">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
         <div id="mobile" class="collapse navbar-collapse">
-            <ul class="navbar-nav me-auto text-white">
-                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a href="index.html" class="nav-link"><i class="fa-solid fa-house-chimney me-1 small"></i> Home</a></li>
                 <li class="nav-item"><a href="challenges.html" class="nav-link">Challenges</a></li>
                 <li class="nav-item"><a href="leaderboard.html" class="nav-link">Leaderboard</a></li>
-                <li class="nav-item"><a href="" class="nav-link"></a></li>
             </ul>
-            <button class="btn btn-primary rounded-3 px-4">Giriş Yap</button>
+
+            <div class="d-flex align-items-center gap-3">
+                <button class="btn btn-link nav-link p-0" id="themeToggle">
+                    <i class="fa-solid fa-moon text-white"></i>
+                </button>
+
+                <div class="dropdown">
+                    <button class="btn btn-primary btn-sm rounded-pill px-3 fw-bold shadow-sm" data-bs-toggle="dropdown">
+                        Giriş Yap
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end shadow border-0">
+                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user me-2"></i>Profilim</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-gear me-2"></i>Ayarlar</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="#"><i class="fa-solid fa-right-from-bracket me-2"></i>Çıkış Yap</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </nav>
