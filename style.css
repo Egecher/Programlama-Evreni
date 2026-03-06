@@ -8,6 +8,10 @@
     color: #f8f9fa !important;
 }
 
+[data-bs-theme="dark"] .card.bg-dark.shadow-lg {
+    box-shadow: 0 10px 30px rgba(25, 135, 84, 0.2) !important;
+}
+
 .bg-body-tertiary {
     transition: background-color 0.3s ease;
 }
