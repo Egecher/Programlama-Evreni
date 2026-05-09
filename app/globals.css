@@ -1,0 +1,23 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-brand-primary: #198754;
+  --color-brand-light: #2fb380;
+  --shadow-glow: 0 5px 50px rgba(25, 135, 84, 0.2);
+}
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300;
+  }
+}
+
+@layer utilities {
+  .theme-toggle-icon {
+    @apply transition-all duration-300 opacity-100;
+  }
+  .theme-toggle-icon:hover {
+    @apply rotate-15 opacity-80;
+  }
+}
