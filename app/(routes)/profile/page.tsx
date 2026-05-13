@@ -143,16 +143,51 @@ export default function ProfilePage() {
   // Şifre Güncelleme
   const handlePasswordUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (passwordForm.newPassword !== passwordForm.confirmPassword) {
       setSettingsStatus({ type: 'error', message: 'Yeni şifreler eşleşmiyor!' });
       return;
     }
+
+    if (passwordForm.newPassword.length < 8) {
+      setSettingsStatus({ type: 'error', message: 'Şifre en az 8 karakter olmalıdır.' });
+      return;
+    }
+
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
+    if (!passwordRegex.test(passwordForm.newPassword)) {
+      setSettingsStatus({ type: 'error', message: 'Şifreniz en az 1 harf ve 1 rakam içermelidir.' });
+      return;
+    }
+
     setSettingsStatus({ type: 'info', message: 'Şifre güncelleniyor...' });
 
-    setTimeout(() => {
+    try {
+      const res = await fetch('/api/user/change-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          currentPassword: passwordForm.currentPassword,
+          newPassword: passwordForm.newPassword,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || 'Şifre güncellenirken bir hata oluştu.');
+      }
+
       setSettingsStatus({ type: 'success', message: 'Şifre başarıyla değiştirildi!' });
       setPasswordForm({ currentPassword: '', newPassword: '', confirmPassword: '' });
-    }, 1000);
+
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setSettingsStatus({ type: 'error', message: error.message });
+      } else {
+        setSettingsStatus({ type: 'error', message: 'Bilinmeyen bir hata oluştu.' });
+      }
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, formType: 'profile' | 'password') => {
