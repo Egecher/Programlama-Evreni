@@ -26,7 +26,7 @@ Projeyi kendi bilgisayarında yerel olarak çalıştırmak için aşağıdaki ad
 
 ### 1. Projeyi Klonlayın
 ```bash
-git clone [https://github.com/Egecher/Programlama-Evreni.git](https://github.com/Egecher/Programlama-Evreni.git)
+git clone https://github.com/Egecher/Programlama-Evreni.git
 cd programlama-evreni
 
 ```
