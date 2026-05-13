@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import NewsletterForm from '../NewsletterForm';
 
 export default function Footer() {
   return (
@@ -51,13 +52,7 @@ export default function Footer() {
           <div className="sm:col-span-2 lg:col-span-4">
             <h6 className="font-bold mb-4 dark:text-white">Yeni Challenge&apos;lardan Haberdar Ol</h6>
             <p className="text-slate-600 dark:text-slate-400 text-sm mb-4">E-posta listemize katıl, yeni sorular eklendiğinde ilk sen duy.</p>
-            <form className="flex flex-col sm:flex-row gap-3">
-              <input type="email" className="w-full px-4 py-3 sm:py-2 text-sm rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-primary" 
-                placeholder="E-posta adresin" />
-              <button className="bg-brand-primary hover:bg-green-700 text-white px-6 py-3 sm:py-2 rounded-lg text-sm font-bold transition-colors whitespace-nowrap">
-                Abone Ol
-              </button>
-            </form>
+            <NewsletterForm />
           </div>
         </div>
 
