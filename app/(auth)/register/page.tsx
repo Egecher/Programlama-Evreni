@@ -106,9 +106,10 @@ function RegisterForm() {
               value={formData.password}
               onChange={handleChange}
               required
-              minLength={6}
+              minLength={8}
+              autoComplete="new-password"
               className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-primary transition-all"
-              placeholder="En az 6 karakter"
+              placeholder="En az 8 karakter"
             />
           </div>
         </div>

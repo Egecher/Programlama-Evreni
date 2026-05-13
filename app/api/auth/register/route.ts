@@ -13,8 +13,9 @@ export async function POST(req: Request) {
     if (!username || !email || !password)
       return NextResponse.json({ message: "Lütfen tüm alanları doldurun." }, { status: 400 });
 
-    if (password.length < 6)
-      return NextResponse.json({ message: "Şifre en az 6 karakter olmalıdır." }, { status: 400 });
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
+    if (!passwordRegex.test(password))
+      return NextResponse.json({ message: "Şifre en az 8 karakter olmalı, en az 1 harf ve 1 rakam içermelidir." }, { status: 400 });
 
     const existingUser = await User.findOne({
       $or: [{ email: email }, { username: username }]
