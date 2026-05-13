@@ -113,7 +113,7 @@ function RegisterForm() {
           </div>
         </div>
 
-        <div>
+        {/* <div>
           <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1">
             Referans Kodu <span className="text-slate-400 font-normal">(İsteğe Bağlı)</span>
           </label>
@@ -131,7 +131,7 @@ function RegisterForm() {
               <i className="fa-solid fa-check"></i> Referans kodu bağlantıdan otomatik alındı.
             </p>
           )}
-        </div>
+        </div> */}
 
         <button type="submit" disabled={status.loading || !!status.success}
           className="w-full bg-brand-primary hover:bg-green-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed mt-4">
