@@ -7,6 +7,7 @@ export interface IUser extends Document {
   points: number;
   level: string;
   avatar: string;
+  role: 'user' | 'admin';
   completedChallenges: {
     challenge: mongoose.Types.ObjectId;
     startedAt: Date; // Soruya tıkladığı an
@@ -28,6 +29,11 @@ const UserSchema: Schema = new Schema(
     points: { type: Number, default: 0 },
     level: { type: String, default: 'Junior' },
     avatar: { type: String, default: '' },
+    role: {
+      type: String,
+      enum: ['user', 'admin'],
+      default: 'user'
+    },
     completedChallenges: [
       {
         challenge: { type: Schema.Types.ObjectId, ref: 'Challenge', required: true },
