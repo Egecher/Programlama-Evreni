@@ -54,7 +54,7 @@ JWT_EXPIRES_IN=7d
 
 ```
 
-*(Not: Canlı ortama (Vercel vb.) deploy ederken `NEXT_PUBLIC_APP_URL` değerini kendi domaininiz olan `https://programlama-evreni.vercel.app` olarak ayarlamayı unutmayın.)*
+*(Not: Canlı ortama (Vercel vb.) deploy ederken `NEXT_PUBLIC_APP_URL` değerini kendi domaininiz (example: `https://programlama-evreni.vercel.app`) olarak ayarlamayı unutmayın.)*
 
 ### 4. Geliştirme Sunucusunu Başlatın
 
