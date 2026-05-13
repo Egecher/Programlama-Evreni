@@ -95,9 +95,9 @@ export default function LoginPage() {
           <div>
             <div className="flex justify-between items-center mb-1">
               <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300">Şifre</label>
-              <Link href="/forgot-password" className="text-xs text-brand-primary hover:underline font-medium">
+              {/* <Link href="/forgot-password" className="text-xs text-brand-primary hover:underline font-medium">
                 Şifremi Unuttum
-              </Link>
+              </Link> */}
             </div>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
