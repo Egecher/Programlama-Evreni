@@ -109,7 +109,7 @@ export default async function Home() {
               <i className="fa-solid fa-trophy text-3xl"></i>
             </div>
             <h4 className="text-xl font-bold mb-2 dark:text-white">3. Liderliğe Yüksel</h4>
-            <p className="text-slate-500 text-sm">Çözdüğün her sorudan puan kazan ve hem genel hem de dil bazlı sıralamada yerini al.</p>
+            <p className="text-slate-500 text-sm">Çözdüğün her sorudan puan kazan ve genel sıralamada yerini al.</p>
           </div>
         </div>
       </section>

@@ -13,11 +13,19 @@ interface LeaderboardUser {
 }
 
 async function getLeaderboardData(): Promise<LeaderboardUser[]> {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/leaderboard`, {
-    next: { revalidate: 60 }
-  });
-  if (!res.ok) return [];
-  return res.json();
+  const baseUrl = (process.env.NEXT_PUBLIC_APP_URL ? `https://${process.env.NEXT_PUBLIC_APP_URL}` : 'http://localhost:3000');
+
+  try {
+    const res = await fetch(`${baseUrl}/api/leaderboard`, {
+      next: { revalidate: 60 }
+    });
+
+    if (!res.ok) return [];
+
+    return (await res.json()) as LeaderboardUser[];
+  } catch {
+    return [];
+  }
 }
 
 export default async function LeaderboardPage() {
