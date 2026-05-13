@@ -134,7 +134,7 @@ function RegisterForm() {
         </div>
 
         <button type="submit" disabled={status.loading || !!status.success}
-          className="w-full bg-brand-primary hover:bg-green-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-lg shadow-green-500/30 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed mt-4">
+          className="w-full bg-brand-primary hover:bg-green-700 text-white font-bold py-3 px-4 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed mt-4">
           {status.loading ? (
             <i className="fa-solid fa-circle-notch fa-spin"></i>
           ) : (
