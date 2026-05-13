@@ -96,33 +96,47 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
       existingRecord.timeSpent = timeSpentSec;
       existingRecord.submittedAnswer = answer;
 
-      if (timeSpentSec > maxAllowedSec) {
-        existingRecord.status = 'Süre Doldu';
-        await user.save();
-        return NextResponse.json({ status: 'error', message: 'Süre dolduktan sonra gönderim yaptın, maalesef kabul edilmedi.' });
+      let isCorrect = false;
+      if (challenge.type === 'quiz') {
+        isCorrect = answer === challenge.correctAnswer;
+      } else if (challenge.type === 'code') {
+        isCorrect = true;
       }
 
-      if (challenge.type === 'quiz') {
-        if (answer === challenge.correctAnswer) {
-          existingRecord.status = 'Başarılı';
-          existingRecord.earnedPoints = challenge.points;
-          user.points += challenge.points;
-        } else {
-          existingRecord.status = 'Hatalı';
-        }
-      } else if (challenge.type === 'code') {
+      if (timeSpentSec > maxAllowedSec) {
+        existingRecord.status = 'Süre Doldu';
+        existingRecord.earnedPoints = 0;
+        await user.save();
+
+        const timeoutMessage = isCorrect
+          ? 'Cevabın DOĞRU! 🎉 Ancak süren dolduğu için maalesef puan kazanamadın.'
+          : 'Süren doldu ve cevabın YANLIŞ. 😔 Puan kazanamadın.';
+
+        return NextResponse.json({ status: 'error', message: timeoutMessage });
+      }
+
+      if (isCorrect) {
         existingRecord.status = 'Başarılı';
         existingRecord.earnedPoints = challenge.points;
         user.points += challenge.points;
-      }
 
-      await user.save();
-      return NextResponse.json({
-        status: existingRecord.status === 'Başarılı' ? 'success' : 'error',
-        message: existingRecord.status === 'Başarılı'
-          ? `Tebrikler! +${challenge.points} Puan kazandın.`
-          : 'Yanlış cevap verdin, maalesef puan alamadın.'
-      });
+        await user.save();
+
+        return NextResponse.json({
+          status: 'success',
+          message: `Tebrikler! +${challenge.points} Puan kazandın.`
+        });
+      } else {
+        existingRecord.status = 'Hatalı';
+        existingRecord.earnedPoints = 0;
+
+        await user.save();
+
+        return NextResponse.json({
+          status: 'error',
+          message: 'Yanlış cevap verdin, maalesef puan alamadın.'
+        });
+      }
     }
 
     return NextResponse.json({ status: 'error', message: "Geçersiz işlem tipi." }, { status: 400 });

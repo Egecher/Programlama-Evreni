@@ -15,7 +15,7 @@ interface ChallengeWorkspaceProps {
   timeSpentStr?: string;
 }
 
-export default function ChallengeWorkspace({ 
+export default function ChallengeWorkspace({
   challengeId,
   durationSeconds,
   type,
@@ -88,7 +88,7 @@ export default function ChallengeWorkspace({
     if (isReadOnly) return;
 
     if (type === 'code' && !code.trim()) {
-      setResult({ status: 'error', message: 'Kral boş kod gönderilmez, bir şeyler yaz!' }); return;
+      setResult({ status: 'error', message: 'Boş kod gönderilmez, bir şeyler yaz!' }); return;
     }
     if (type === 'quiz' && !selectedOption) {
       setResult({ status: 'error', message: 'Lütfen bir şık seç!' }); return;
@@ -139,17 +139,16 @@ export default function ChallengeWorkspace({
         </div>
       </div>
 
-      <div className="bg-white dark:bg-slate-900 p-6 relative">
-        {(isTimeUp && !isReadOnly && !isLocalFinished) && (
-          <div className="absolute inset-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center">
-             <i className="fa-solid fa-hourglass-end text-5xl text-red-500 mb-4"></i>
-             <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Süren Doldu!</h2>
-             <p className="mt-2 font-bold text-slate-600">Lütfen mevcut cevabını gönder.</p>
-          </div>
-        )}
+      {(isTimeUp && !isReadOnly && !isLocalFinished) && (
+        <div className="bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 px-6 py-3 text-sm font-bold border-b border-red-200 dark:border-red-800 flex items-center gap-3">
+          <i className="fa-solid fa-circle-exclamation text-lg"></i>
+          Süren doldu! Cevabını gönderip pratik yapabilirsin ancak bu sorudan puan alamayacaksın.
+        </div>
+      )}
 
+      <div className="bg-white dark:bg-slate-900 p-6 relative">
         {type === 'code' ? (
-          <textarea value={code} onChange={(e) => setCode(e.target.value)} disabled={isTimeUp || isDone} spellCheck="false" 
+          <textarea value={code} onChange={(e) => setCode(e.target.value)} disabled={isDone} spellCheck="false" 
             className={`w-full h-80 font-mono p-4 rounded-lg focus:outline-none resize-y text-sm leading-relaxed ${
               isReadOnly 
                 ? "bg-slate-100 text-slate-500 dark:bg-slate-800/50 dark:text-slate-400 cursor-not-allowed border border-slate-200 dark:border-slate-700" 
@@ -175,7 +174,7 @@ export default function ChallengeWorkspace({
 
               return (
                 <label key={index} className={`flex items-center p-4 border rounded-xl transition-colors ${optionClass} ${isDone ? 'cursor-default pointer-events-none' : 'cursor-pointer'}`}>
-                  <input type="radio" value={opt} checked={selectedOption === opt} onChange={(e) => setSelectedOption(e.target.value)} disabled={isTimeUp || isDone} 
+                  <input type="radio" value={opt} checked={selectedOption === opt} onChange={(e) => setSelectedOption(e.target.value)} disabled={isDone} 
                     className="w-5 h-5 text-brand-primary" />
                   <span className={`ml-3 font-medium ${isReadOnly && opt === correctAnswer ? 'font-bold' : ''}`}>
                     {opt}
@@ -200,7 +199,7 @@ export default function ChallengeWorkspace({
         </div>
 
         {!isReadOnly && (
-          <button onClick={handleSubmit} disabled={isSubmitting || (isDone && !isTimeUp)} className="shrink-0 w-full sm:w-auto px-8 py-3 rounded-xl font-bold text-white bg-brand-primary hover:bg-green-700 disabled:bg-slate-400 shadow-md transition-all flex items-center justify-center gap-2">
+          <button onClick={handleSubmit} disabled={isSubmitting || isDone} className="shrink-0 w-full sm:w-auto px-8 py-3 rounded-xl font-bold text-white bg-brand-primary hover:bg-green-700 disabled:bg-slate-400 shadow-md transition-all flex items-center justify-center gap-2">
             {isSubmitting ? <><i className="fa-solid fa-circle-notch fa-spin"></i> Gönderiliyor...</> : <><i className="fa-solid fa-paper-plane"></i> Cevabı Gönder</>}
           </button>
         )}

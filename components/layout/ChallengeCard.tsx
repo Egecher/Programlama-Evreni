@@ -4,6 +4,8 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 
+type ChallengeStatus = 'Devam Ediyor' | 'Başarılı' | 'Süre Doldu' | 'Hatalı';
+
 interface ChallengeProps {
   id?: string;
   title: string;
@@ -12,12 +14,19 @@ interface ChallengeProps {
   points: number;
   duration: string;
   logo: string;
-  isCompleted?: boolean;
+  userStatus?: ChallengeStatus;
 }
 
-export default function ChallengeCard({ id, title, description, difficulty, points, duration, logo, isCompleted = false }: ChallengeProps) {
+export default function ChallengeCard({ id, title, description, difficulty, points, duration, logo, userStatus }: ChallengeProps) {
   const router = useRouter();
   const { user } = useAuth();
+
+  const isCompleted = userStatus === 'Başarılı';
+  const isFailed = userStatus === 'Hatalı';
+  const isExpired = userStatus === 'Süre Doldu';
+  const isInProgress = userStatus === 'Devam Ediyor';
+
+  const isDone = isCompleted || isFailed || isExpired;
 
   const handleAction = () => {
     if (!user) {
@@ -28,6 +37,12 @@ export default function ChallengeCard({ id, title, description, difficulty, poin
     if (id) {
       router.push(`/challenges/${id}${isCompleted ? '?view=true' : ''}`);
     }
+  };
+
+  const getButtonText = () => {
+    if (isDone) return 'Çözümü Görüntüle';
+    if (isInProgress) return 'Devam Et';
+    return 'Meydan Oku';
   };
 
   return (
@@ -65,7 +80,7 @@ export default function ChallengeCard({ id, title, description, difficulty, poin
             </div>
 
             <button onClick={handleAction} className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full text-sm font-bold transition-colors">
-              {isCompleted ? 'Çözümü Görüntüle' : 'Meydan Oku'}
+              {getButtonText()}
             </button>
           </div>
         </div>

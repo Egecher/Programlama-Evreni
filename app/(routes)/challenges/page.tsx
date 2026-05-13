@@ -25,9 +25,11 @@ interface DecodedToken extends JwtPayload {
   _id?: string;
 }
 
+type ChallengeStatus = 'Devam Ediyor' | 'Başarılı' | 'Süre Doldu' | 'Hatalı';
+
 interface CompletedChallengeRecord {
   challenge: mongoose.Types.ObjectId | string;
-  status: string;
+  status: ChallengeStatus;
 }
 
 export default async function ChallengesPage({ searchParams }: { searchParams: Promise<{ category?: string }> }) {
@@ -40,7 +42,7 @@ export default async function ChallengesPage({ searchParams }: { searchParams: P
   const query = activeCategory === 'Tümü' ? {} : { category: activeCategory };
   const challenges = await Challenge.find(query).sort({ createdAt: -1 }).lean() as ChallengeItem[];
 
-  let completedChallengeIds: string[] = [];
+  const userChallengeStatuses: Record<string, ChallengeStatus> = {};
 
   const cookieStore = await cookies();
   const token = cookieStore.get('token')?.value;
@@ -53,9 +55,9 @@ export default async function ChallengesPage({ searchParams }: { searchParams: P
       const user = await User.findById(userId).select('completedChallenges').lean();
 
       if (user && user.completedChallenges) {
-        completedChallengeIds = user.completedChallenges
-          .filter((c: CompletedChallengeRecord) => c.status === 'Başarılı')
-          .map((c: CompletedChallengeRecord) => c.challenge.toString());
+        user.completedChallenges.forEach((c: CompletedChallengeRecord) => {
+          userChallengeStatuses[c.challenge.toString()] = c.status;
+        });
       }
     } catch (error) {}
   }
@@ -68,20 +70,15 @@ export default async function ChallengesPage({ searchParams }: { searchParams: P
           <div className="sticky top-24">
             <h2 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4 px-2">Kategoriler</h2>
             <nav className="flex flex-col gap-1">
-              <Link href="/challenges"
-                className={`block text-left px-4 py-3 rounded-lg text-sm font-medium transition-all ${
+              <Link href="/challenges" className={`block text-left px-4 py-3 rounded-lg text-sm font-medium transition-all ${
                   activeCategory === 'Tümü'
                   ? "bg-green-50 text-green-700 border-l-4 border-green-600 dark:bg-green-900/20 dark:text-green-400" 
-                  : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
-                }`}
-              >
+                  : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800" }`}>
                 Tümü
               </Link>
 
               {distinctCategories.map((cat: string) => (
-                <Link 
-                  key={cat}
-                  href={`/challenges?category=${encodeURIComponent(cat)}`}
+                <Link key={cat} href={`/challenges?category=${encodeURIComponent(cat)}`}
                   className={`block text-left px-4 py-3 rounded-lg text-sm font-medium transition-all ${
                     activeCategory === cat 
                     ? "bg-green-50 text-green-700 border-l-4 border-green-600 dark:bg-green-900/20 dark:text-green-400" 
@@ -109,7 +106,7 @@ export default async function ChallengesPage({ searchParams }: { searchParams: P
             ) : (
               challenges.map((challenge: ChallengeItem) => {
                 const challengeIdStr = challenge._id.toString();
-                const isCompleted = completedChallengeIds.includes(challengeIdStr);
+                const currentStatus = userChallengeStatuses[challengeIdStr];
 
                 return (
                   <ChallengeCard key={challengeIdStr}
@@ -120,8 +117,7 @@ export default async function ChallengesPage({ searchParams }: { searchParams: P
                     points={challenge.points}
                     duration={`${challenge.duration}`}
                     logo={challenge.logo}
-                    isCompleted={isCompleted}
-                  />
+                    userStatus={currentStatus} />
                 );
               })
             )}
